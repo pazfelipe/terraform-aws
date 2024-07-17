@@ -99,6 +99,7 @@ module "eks" {
   subnet_ids         = concat([for subnet in module.sub_network : subnet.private_subnet_ids][*][0], [for subnet in module.sub_network : subnet.public_subnet_ids][*][0])
   eks_log_types      = var.eks_log_types
   aws_auth_configmap = local.aws_auth_configmap
+  roles              = local.roles
 }
 
 module "node_group" {
@@ -127,7 +128,6 @@ module "plugins" {
   cluster_id                    = module.eks.cluster_id
   cluster_certificate_authority = module.eks.cluster_certificate_authority
   nodes_name                    = module.iam.eks_ng_role_name
-  roles                         = local.roles
   argocd-configmap              = local.argocd.configmap
   argocd-rbac                   = local.argocd.rbac
   karpenter                     = local.karpenter
