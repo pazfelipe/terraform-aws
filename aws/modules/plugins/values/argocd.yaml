@@ -1,0 +1,13 @@
+global:
+  image:
+    tag: "v2.6.6"
+
+server:
+  extraArgs:
+  - --insecure
+  service:
+    type: LoadBalancer
+
+redis:
+  auth:
+    enabled: false
