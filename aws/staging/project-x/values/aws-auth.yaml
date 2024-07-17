@@ -1,0 +1,21 @@
+apiVersion: v1
+data:
+  mapRoles: |
+    - groups:
+      - system:bootstrappers
+      - system:nodes
+      rolearn: arn:aws:iam::<aws_account>:role/AWSEKSNodeGroupRoleForProjectX
+      username: system:node:{{EC2PrivateDNSName}}
+  mapUsers: |
+    - userarn: arn:aws:iam::<aws_account>:user/user_x
+      username: usex_x@email.com
+      groups:
+        - system:masters
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+
+# AWSEKSNodeGroupRoleForProjectX -> needs to match to the project's id. You can find it in the variable.tf in the <project-x folder>. It's the title camelcase of the project's id found in the variables.tf
+
+# userarn: arn:aws:iam::<aws_account>:user/user_x -> You can find this information fron the AWS Console

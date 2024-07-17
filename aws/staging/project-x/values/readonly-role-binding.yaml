@@ -1,0 +1,12 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: read-only-pods
+subjects:
+- kind: User
+  name: user_x@email.com
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: pod-reader-only
+  apiGroup: rbac.authorization.k8s.io
