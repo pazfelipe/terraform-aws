@@ -2,6 +2,8 @@
 
 This repository contains the infrastructure as code (IaC) using Terraform to configure and manage various AWS resources. The project is structured to facilitate the configuration of different environments and projects, with options to include or exclude modules as needed.
 
+This project has been developed to help manage EKS-based environments, however, you can adjust it to use other resources, from EC2 instances to lambda functions, provided you configure the necessary tools.
+
 ## Project Structure
 
 ```bash
@@ -106,9 +108,9 @@ This repository contains the infrastructure as code (IaC) using Terraform to con
 
 ### Prerequisites
 
-- Terraform
-- AWS CLI configured
-- Kubernetes CLI (kubectl)
+- [Terraform](https://developer.hashicorp.com/terraform/install?product_intent=terraform)
+- AWS CLI configured and logged in (ensure your AWS credentials are properly set as per [AWS documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html))
+- Kubernetes CLI [(kubectl)](https://kubernetes.io/docs/tasks/tools/)
 
 ### Setup Steps
 
@@ -133,8 +135,9 @@ terraform apply
 
 ## Notes on Optional Directories
 
-- Plugins: An optional directory that contains various additional tools and services. Each plugin can be removed simply by deleting its file and removing its reference in the project’s main.tf.
+- Plugins: An optional directory that contains various additional tools and services. Each plugin can be removed simply by deleting its file and removing its reference in the project’s [main.tf](/aws/staging/project-x/main.tf).
 - Shared: A directory serving as an example for resources that are not part of the main project, such as MySQL databases or S3 buckets. Like the plugins directory, shared is optional and can be completely removed or have its items deleted. This directory has a separate tfstate from project-x.
+- Terraform can use local or remote state. To use local state, simply keep the backend commented out or remove it from the providers, [project-x](/aws/staging/project-x/providers.tf), for example. To use remote state, uncomment the backend and point it to the correct bucket.
 
 ## Contribution
 
