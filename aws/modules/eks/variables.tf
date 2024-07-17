@@ -25,3 +25,28 @@ variable "aws_auth_configmap" {
   })
   description = "The data for the aws-auth ConfigMap"
 }
+
+variable "roles" {
+  description = "Kubernetes roles"
+  type = map(object({
+    metadata = object({
+      name      = string
+      namespace = string
+    })
+    role_ref = object({
+      kind     = string
+      name     = string
+      apiGroup = string
+    })
+    subjects = list(object({
+      kind     = string
+      name     = string
+      apiGroup = string
+    }))
+    rules = list(object({
+      apiGroups = list(string)
+      resources = list(string)
+      verbs     = list(string)
+    }))
+  }))
+}
