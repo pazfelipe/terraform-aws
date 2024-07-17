@@ -39,32 +39,6 @@ variable "nodes_name" {
   type        = string
   default     = "nodes"
 }
-
-variable "roles" {
-  description = "Kubernetes roles"
-  type = map(object({
-    metadata = object({
-      name      = string
-      namespace = string
-    })
-    role_ref = object({
-      kind     = string
-      name     = string
-      apiGroup = string
-    })
-    subjects = list(object({
-      kind     = string
-      name     = string
-      apiGroup = string
-    }))
-    rules = list(object({
-      apiGroups = list(string)
-      resources = list(string)
-      verbs     = list(string)
-    }))
-  }))
-}
-
 variable "argocd-configmap" {
   description = "ArgoCD ConfigMaps"
   type = object({
