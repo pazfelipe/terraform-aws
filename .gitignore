@@ -1,0 +1,10 @@
+**/*/key.json
+**/*/.terraform
+**/*/*tfstate*
+**/*/.DS_Store
+**/*/.pub
+**/*/*rsa*
+**/*/terraform.tfvars
+**/*/.venv
+**/*/node_modules
+**/*/*.zip
