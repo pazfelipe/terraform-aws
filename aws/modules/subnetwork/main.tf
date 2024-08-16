@@ -6,7 +6,10 @@ resource "aws_subnet" "public" {
 
   availability_zone = var.zones[count.index]
 
-  tags = var.public_tags
+  tags = merge(var.public_tags, {
+    Type = "public",
+    Name = "subnet-public-${var.vpc_name}-${replace(substr(var.zones[count.index], 7, 3), "-", "")}"
+  })
 }
 
 resource "aws_subnet" "private" {
@@ -16,5 +19,8 @@ resource "aws_subnet" "private" {
 
   availability_zone = var.zones[count.index]
 
-  tags = var.private_tags
+  tags = merge(var.private_tags, {
+    Type = "private",
+    Name = "subnet-private-${var.vpc_name}-${replace(substr(var.zones[count.index], 7, 3), "-", "")}"
+  })
 }

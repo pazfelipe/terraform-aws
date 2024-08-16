@@ -8,6 +8,10 @@ variable "vpc_id" {
   description = "The ID of the VPC where the subnets will be created"
   type        = string
 }
+variable "vpc_name" {
+  description = "The Name of the VPC where the subnets will be created"
+  type        = string
+}
 
 variable "public_tags" {
   description = "Tags to be applied to the public subnets"
