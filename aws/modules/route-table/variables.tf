@@ -18,6 +18,11 @@ variable "internet_gateway_id" {
   type        = string
 }
 
+variable "nat_gateway_id" {
+  description = "The ID of the NAT Gateway"
+  type        = string
+}
+
 variable "public_subnet_ids" {
   description = "List of IDs of public subnets"
   type        = list(string)
@@ -31,10 +36,4 @@ variable "private_subnet_ids" {
 variable "private_route_table_ids" {
   description = "List of IDs of private route tables"
   type        = list(string)
-}
-
-variable "cidr_block" {
-  description = "The CIDR block of the route"
-  type        = string
-  default     = "0.0.0.0/0"
 }
