@@ -31,6 +31,7 @@ module "sub_network" {
   count = length(var.zones)
 
   vpc_id = module.vpc.vpc_id
+  vpc_name = module.vpc.vpc_name
   zones  = [var.zones[count.index]]
 
   public_cidr_block  = "11.32.${count.index + 1 * 2}.0/24"
@@ -38,12 +39,10 @@ module "sub_network" {
 
   private_tags = {
     "kubernetes.io/cluster/${var.project_id}" = "owned"
-    Name                                      = "${var.project_id}/SubnetPrivate${upper(replace(var.zones[count.index], "-", ""))}"
     "kubernetes.io/role/internal-elb"         = 1
   }
   public_tags = {
     "kubernetes.io/cluster/${var.project_id}" = "owned"
-    Name                                      = "${var.project_id}/SubnetPublic${upper(replace(var.zones[count.index], "-", ""))}"
     "kubernetes.io/role/elb"                  = 1
   }
 }
@@ -62,12 +61,12 @@ module "route_table" {
 
   zones                   = var.zones
   vpc_id                  = module.vpc.vpc_id
-  vpc_name                = format("%s%s", "rtb-", var.project_id)
+  vpc_name                = format("%s", var.project_id)
   internet_gateway_id     = module.internet_gateway.internet_gateway_id
   public_subnet_ids       = concat([for subnet in module.sub_network : subnet.public_subnet_ids][*][0])
   private_subnet_ids      = [for subnet in module.sub_network : subnet.private_subnet_ids][*][0]
   private_route_table_ids = module.route_table.private_route_table_ids
-  cidr_block              = var.route_table_cidr_block
+  nat_gateway_id          = module.nat_gateway.nat_gateway_id
 }
 
 module "nat_gateway" {
